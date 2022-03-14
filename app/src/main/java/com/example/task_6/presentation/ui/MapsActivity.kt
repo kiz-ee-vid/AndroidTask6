@@ -12,8 +12,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.task_6.databinding.ActivityMapsBinding
-import com.example.task_6.domain.Constants
-import com.example.task_6.domain.Constants.Companion.homiel
+import com.example.task_6.domain.utils.Constants
+import com.example.task_6.domain.utils.Constants.Companion.homiel
 import com.example.task_6.presentation.di.App
 import com.example.task_6.presentation.ui.vm.MainViewModel
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -56,7 +56,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.addMarker(
                 MarkerOptions().position(LatLng(it.gps_x, it.gps_y))
                     .title(it.type)
-                    .snippet("${it.address_type.plus(" ") ?: ""}${it.address.plus(" ") ?: ""}${it.house ?: ""}")
+                    .snippet("${it.address_type.plus(" ")}${it.address.plus(" ")}${it.house}")
                     .icon(
                         when (it.type) {
                             Constants.ATM -> BitmapDescriptorFactory.defaultMarker(

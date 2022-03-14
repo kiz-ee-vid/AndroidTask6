@@ -2,16 +2,16 @@ package com.example.task_6.domain
 
 import com.example.task_6.data.BankItem
 import com.example.task_6.data.RepositoryImpl
-import com.example.task_6.domain.Constants.Companion.city
-import com.example.task_6.domain.Constants.Companion.homiel
-import com.example.task_6.presentation.ui.MapsActivity
+import com.example.task_6.domain.utils.Constants
+import com.example.task_6.domain.utils.Constants.Companion.city
+import com.example.task_6.domain.utils.Constants.Companion.homiel
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class BanksInteractor @Inject constructor(private val repositoryImpl: RepositoryImpl)  {
+class BanksInteractor @Inject constructor(private val repositoryImpl: RepositoryImpl) {
     fun getBanks(): Observable<BankItem> {
         val single = Single.zip(
             repositoryImpl.getListOfAtm(city),
@@ -26,7 +26,9 @@ class BanksInteractor @Inject constructor(private val repositoryImpl: Repository
             .map { list ->
                 list.sortedWith(
                     compareBy {
-                        sqrt((Constants.homiel.latitude - it.gps_x).pow(2) + (homiel.longitude - it.gps_y).pow(2)) })
+                        sqrt(
+                            (homiel.latitude - it.gps_x).pow(2) + (homiel.longitude - it.gps_y).pow(2))
+                    })
             }
             .flatMapObservable { Observable.fromIterable(it) }
             .take(10)

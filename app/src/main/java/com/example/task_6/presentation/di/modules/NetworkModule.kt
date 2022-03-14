@@ -1,7 +1,7 @@
 package com.example.task_6.presentation.di.modules
 
 import com.example.task_6.data.ApiService
-import com.example.task_6.domain.Constants
+import com.example.task_6.domain.utils.Constants
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

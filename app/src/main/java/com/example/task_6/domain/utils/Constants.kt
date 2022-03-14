@@ -1,9 +1,9 @@
-package com.example.task_6.domain
+package com.example.task_6.domain.utils
 
 import com.google.android.gms.maps.model.LatLng
 
 class Constants {
-    companion object{
+    companion object {
         const val ATM_URL = "atm"
         const val INFOBOX_URl = "infobox"
         const val FILIAL_URL = "filials_info"

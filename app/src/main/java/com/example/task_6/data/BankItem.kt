@@ -26,4 +26,4 @@ data class BankItem(
     val house: String,
 
     var type: String
-    )
+)
