@@ -12,6 +12,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.task_6.databinding.ActivityMapsBinding
+import com.example.task_6.domain.Constants
+import com.example.task_6.domain.Constants.Companion.homiel
 import com.example.task_6.presentation.di.App
 import com.example.task_6.presentation.ui.vm.MainViewModel
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -36,12 +38,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        (application as App).getAppComponent().inject(this)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        (application as App).getAppComponent().inject(this)
         mMap = googleMap
-        val homiel = LatLng(52.42416, 31.014281)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(homiel, 15f))
         viewModel.banksList.observe(this, {
             it?.let {
@@ -58,13 +59,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     .snippet("${it.address_type.plus(" ") ?: ""}${it.address.plus(" ") ?: ""}${it.house ?: ""}")
                     .icon(
                         when (it.type) {
-                            getString(R.string.atm) -> BitmapDescriptorFactory.defaultMarker(
+                            Constants.ATM -> BitmapDescriptorFactory.defaultMarker(
                                 BitmapDescriptorFactory.HUE_BLUE
                             )
-                            getString(R.string.filial) -> BitmapDescriptorFactory.defaultMarker(
+                            Constants.FILIAL -> BitmapDescriptorFactory.defaultMarker(
                                 BitmapDescriptorFactory.HUE_GREEN
                             )
-                            getString(R.string.infobox) -> BitmapDescriptorFactory.defaultMarker(
+                            Constants.INFOBOX -> BitmapDescriptorFactory.defaultMarker(
                                 BitmapDescriptorFactory.HUE_AZURE
                             )
                             else -> {
@@ -74,16 +75,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     )
             )
         }
-    }
-
-  /*  private fun checkInternetConnection(): Boolean {
-        val connection =
-            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connection.activeNetwork != null
-    }*/
-
-    companion object {
-        const val gps_x = 52.425163
-        const val gps_y = 31.015039
     }
 }

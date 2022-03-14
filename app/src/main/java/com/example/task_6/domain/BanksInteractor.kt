@@ -3,6 +3,7 @@ package com.example.task_6.domain
 import com.example.task_6.data.BankItem
 import com.example.task_6.data.RepositoryImpl
 import com.example.task_6.domain.Constants.Companion.city
+import com.example.task_6.domain.Constants.Companion.homiel
 import com.example.task_6.presentation.ui.MapsActivity
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -17,15 +18,15 @@ class BanksInteractor @Inject constructor(private val repositoryImpl: Repository
             repositoryImpl.getListOfFilials(city),
             repositoryImpl.getListOfInfobox(city),
             { banks, filials, infoboxes ->
-                banks.forEach { it.type = "ATM" }
-                filials.forEach { it.type = "Filial" }
-                infoboxes.forEach { it.type = "Infobox" }
+                banks.forEach { it.type = Constants.ATM }
+                filials.forEach { it.type = Constants.FILIAL }
+                infoboxes.forEach { it.type = Constants.INFOBOX }
                 banks + filials + infoboxes
             })
             .map { list ->
                 list.sortedWith(
                     compareBy {
-                        sqrt((MapsActivity.gps_x - it.gps_x).pow(2) + (MapsActivity.gps_y - it.gps_y).pow(2)) })
+                        sqrt((Constants.homiel.latitude - it.gps_x).pow(2) + (homiel.longitude - it.gps_y).pow(2)) })
             }
             .flatMapObservable { Observable.fromIterable(it) }
             .take(10)
